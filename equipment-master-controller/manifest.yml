@@ -1,0 +1,10 @@
+---
+applications:
+- name: equipment-master
+  memory: 900M
+  host: equipment-master
+  path: /target/equipment-master-controller-0.0.1-SNAPSHOT.war
+  buildpack: sap_java_buildpack
+  services:
+  - hana_db
+  domain: cfapps.us10.hana.ondemand.com
