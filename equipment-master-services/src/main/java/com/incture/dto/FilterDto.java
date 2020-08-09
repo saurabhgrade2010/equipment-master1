@@ -10,42 +10,57 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BasicDTO extends BaseDto{
-	
+public class FilterDto extends BaseDto{
+
 	private String id;
-	private int version;
 	private String category;
-	private String description;
 	private String status;
 	private String validFrom;
 	private String validTo;
 	private String equipmentName;
-	private boolean is_processed;
-	private boolean isUpdatePendiing;
+	private String orderBy;
+	private String sortBy;
 	private String pageNo;
+	private boolean type;
+	private boolean processed;
+	private boolean UpdatePending;
+	private int t;
+	
+	public int getT() {
+		return t;
+	}
+	public void setT(int t) {
+		this.t = t;
+	}
+	public boolean isUpdatePending() {
+		return UpdatePending;
+	}
+	public void setUpdatePending(boolean updatePending) {
+		UpdatePending = updatePending;
+	}
+	public boolean isProcessed() {
+		return processed;
+	}
+	public void setProcessed(boolean processed) {
+		this.processed = processed;
+	}
+	public boolean isType() {
+		return type;
+	}
+	public void setType(boolean type) {
+		this.type = type;
+	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
 	public String getCategory() {
 		return category;
 	}
 	public void setCategory(String category) {
 		this.category = category;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
 	}
 	public String getStatus() {
 		return status;
@@ -71,17 +86,17 @@ public class BasicDTO extends BaseDto{
 	public void setEquipmentName(String equipmentName) {
 		this.equipmentName = equipmentName;
 	}
-	public boolean isIs_processed() {
-		return is_processed;
+	public String getOrderBy() {
+		return orderBy;
 	}
-	public void setIs_processed(boolean is_processed) {
-		this.is_processed = is_processed;
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
 	}
-	public boolean isUpdatePendiing() {
-		return isUpdatePendiing;
+	public String getSortBy() {
+		return sortBy;
 	}
-	public void setUpdatePendiing(boolean isUpdatePendiing) {
-		this.isUpdatePendiing = isUpdatePendiing;
+	public void setSortBy(String sortBy) {
+		this.sortBy = sortBy;
 	}
 	public String getPageNo() {
 		return pageNo;
@@ -91,14 +106,12 @@ public class BasicDTO extends BaseDto{
 	}
 	@Override
 	public String toString() {
-		return "BasicDTO [id=" + id + ", version=" + version + ", category=" + category + ", description=" + description
-				+ ", validFrom=" + validFrom + ", validTo=" + validTo + ", equipmentName=" + equipmentName
-				+ ", is_processed=" + is_processed + "]";
+		return "FilterDto [id=" + id + ", category=" + category + ", status=" + status + ", validFrom=" + validFrom
+				+ ", validTo=" + validTo + ", equipmentName=" + equipmentName + ", orderBy=" + orderBy + ", sortBy="
+				+ sortBy + ", pageNo=" + pageNo + ", type=" + type + ", processed=" + processed + ", UpdatePending="
+				+ UpdatePending + ", t=" + t + "]";
 	}
 	
 	
 	
-
-	
-
 }

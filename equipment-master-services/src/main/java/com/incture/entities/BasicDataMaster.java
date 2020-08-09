@@ -6,28 +6,29 @@ package com.incture.entities;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 
 @Entity
-@Table(name = "BASIC")
+@Table(name = "BASIC_MASTER")
 @Data
-public class BasicData implements BaseData {
+public class BasicDataMaster implements BaseData  {
 
 	
-	
-   
+	private static final long serialVersionUID = 1L;
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 
 	@Id
-	@EmbeddedId
-	private EquipmentId equipmentId; 
-	
-	
+	@Column(name = "id", columnDefinition = "NVARCHAR(36)")
+	private String id;
 	
 	@Column(name = "category" , columnDefinition = "NVARCHAR(50)")
 	private String category;
@@ -44,131 +45,103 @@ public class BasicData implements BaseData {
 	@Column(name = "validTo")
 	private Date validTo;
 	
-	@Column(name="equipmentname")
+	@Column(name="equipmentname" , columnDefinition = "NVARCHAR(50)")
 	private String equipmentName;
 
-	@Column(name="is_processed")
-	private boolean is_processed; 
-	 
-		private static final long serialVersionUID = 1L;
-
-
-		public static long getSerialversionuid() {
-			return serialVersionUID;
-		}
-
-		
-	public BasicData()
-	{
+	@Column(name="isUpdatePending")
+	private boolean isUpdatePending; 
+	
+	public BasicDataMaster(String id, String category, String description, String status, Date validFrom, Date validTo,
+			String equipmentName, boolean isUpdatePending) {
 		super();
+		this.id = id;
+		this.category = category;
+		this.description = description;
+		this.status = status;
+		this.validFrom = validFrom;
+		this.validTo = validTo;
+		this.equipmentName = equipmentName;
+		this.isUpdatePending = isUpdatePending;
 	}
 
-
-	public EquipmentId getEquipmentId() {
-		return equipmentId;
+	@Override
+	public String toString() {
+		return "BasicDataMaster [id=" + id + ", category=" + category + ", description=" + description + ", status="
+				+ status + ", validFrom=" + validFrom + ", validTo=" + validTo + ", equipmentName=" + equipmentName
+				+ ", isUpdatePending=" + isUpdatePending + "]";
 	}
 
-
-	public void setEquipmentId(EquipmentId equipmentId) {
-		this.equipmentId = equipmentId;
+	public String getId() {
+		return id;
 	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getCategory() {
 		return category;
 	}
 
-
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
 
 	public String getDescription() {
 		return description;
 	}
 
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 
 	public String getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 
 	public Date getValidFrom() {
 		return validFrom;
 	}
 
-
 	public void setValidFrom(Date validFrom) {
 		this.validFrom = validFrom;
 	}
-
 
 	public Date getValidTo() {
 		return validTo;
 	}
 
-
 	public void setValidTo(Date validTo) {
 		this.validTo = validTo;
 	}
-
 
 	public String getEquipmentName() {
 		return equipmentName;
 	}
 
-
 	public void setEquipmentName(String equipmentName) {
 		this.equipmentName = equipmentName;
 	}
 
-
-	public boolean isIs_processed() {
-		return is_processed;
+	public boolean isUpdatePending() {
+		return isUpdatePending;
 	}
 
-
-	public void setIs_processed(boolean is_processed) {
-		this.is_processed = is_processed;
+	public void setUpdatePending(boolean isUpdatePending) {
+		this.isUpdatePending = isUpdatePending;
 	}
 
-
-	@Override
-	public String toString() {
-		return "BasicData [equipmentId=" + equipmentId + ", category=" + category + ", description=" + description
-				+ ", status=" + status + ", validFrom=" + validFrom + ", validTo=" + validTo + ", equipmentName="
-				+ equipmentName + ", is_processed=" + is_processed + "]";
-	}
-
-
-	public BasicData(EquipmentId equipmentId, String category, String description, String status, Date validFrom,
-			Date validTo, String equipmentName, boolean is_processed) {
+	public BasicDataMaster()
+	{
 		super();
-		this.equipmentId = equipmentId;
-		this.category = category;
-		this.description = description;
-		this.status = status;
-		this.validFrom = validFrom;
-		this.validTo = validTo;
-		this.equipmentName = equipmentName;
-		this.is_processed = is_processed;
 	}
 
-
 	
 	
-
 	
 	
 	

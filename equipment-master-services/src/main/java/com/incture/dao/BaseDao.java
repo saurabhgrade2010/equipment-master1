@@ -7,9 +7,9 @@ import org.hibernate.StatelessSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.incture.dto.BaseDto;
-import com.incture.entities.BaseDo;
+import com.incture.entities.BaseData;
 
-public abstract class BaseDao<E extends BaseDo, D extends BaseDto> {
+public abstract class BaseDao<E extends BaseData, D extends BaseDto> {
 
 	
 	@Autowired
@@ -32,7 +32,7 @@ public abstract class BaseDao<E extends BaseDo, D extends BaseDto> {
 	
 	protected abstract E importDto(D fromDto);
 
-	protected abstract D exportDto(E entity);
+	//protected abstract D exportDto(E entity);
 
 
 }

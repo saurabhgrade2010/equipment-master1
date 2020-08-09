@@ -2,6 +2,6 @@ package com.incture.entities;
 
 import java.io.Serializable;
 
-public interface BaseDo extends Serializable {
+public interface BaseData extends Serializable {
 
 }

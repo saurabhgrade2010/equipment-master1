@@ -155,7 +155,7 @@ public class ServicesUtil {
 		return formatedDate;
 	}
 
-	@SuppressWarnings("restriction")
+	
 	public static String getBasicAuth(String userName, String password) {
 		String userpass = userName + ":" + password;
 		return "Basic " + javax.xml.bind.DatatypeConverter.printBase64Binary(userpass.getBytes());
