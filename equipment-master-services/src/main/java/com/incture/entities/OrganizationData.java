@@ -1,6 +1,7 @@
 package com.incture.entities;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -44,6 +45,9 @@ public class OrganizationData implements BaseData {
 	})
 	private BasicData equipmentId;
 	*/
+	/*
+	@EmbeddedId
+	private EquipmentId equipmentId;  */
 	
 	@Column(name="id" , columnDefinition = "NVARCHAR(36)")
 	private String id;

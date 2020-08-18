@@ -24,6 +24,7 @@ public class FilterDto extends BaseDto{
 	private boolean type;
 	private boolean processed;
 	private boolean UpdatePending;
+	
 	private int t;
 	
 	public int getT() {

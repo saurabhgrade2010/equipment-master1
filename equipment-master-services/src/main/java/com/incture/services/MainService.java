@@ -1,4 +1,5 @@
 package com.incture.services;
+
 import com.incture.dto.AllDto;
 import com.incture.dto.BasicDTO;
 import com.incture.dto.FilterDto;
@@ -16,5 +17,11 @@ public interface MainService {
 	ResponseDto createMasterData(AllDto allDto);
 	
 	ResponseDto createMasterDataSync(BasicDTO basicDto);
+	
+	ResponseDto exportExcel(int x);
+	
+	ResponseDto myCategory();
+	
+	ResponseDto mySortingData();
 
 }

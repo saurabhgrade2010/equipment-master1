@@ -3,6 +3,7 @@ package com.incture.services;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -152,6 +153,7 @@ public class MainServiceImpl implements MainService{
 
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public ResponseDto readAllData(FilterDto filterDto) {
 
@@ -232,13 +234,15 @@ public class MainServiceImpl implements MainService{
 				}
 				else{
 					
-					List<Object> l = basicDao.listBasicDataByFilterTwo(filterDto);
+					HashMap<String,Object> l = basicDao.listBasicDataByFilterTwo(filterDto);
+					
 					
 					if(filterDto.getT() == 1)
 					{
-						basicDao.insertIntoExcel(l);
+						List<BasicDTO> l1 = (List<BasicDTO>) l.get("basicDetails");
+															
+						basicDao.insertIntoExcel(l1,1);
 					}
-					
 					responseDto.setMessage("Equipment Details return Successfully by filter....."); 
 					responseDto.setData(l);
 				}
@@ -292,9 +296,16 @@ public class MainServiceImpl implements MainService{
 					responseDto.setData(newList);
 				}
 				else{
-				
 					
-					List<Object> l = basicDao.listBasicDataByFilterTwo(filterDto);
+					HashMap<String,Object> l = basicDao.listBasicDataByFilterTwo(filterDto);
+					
+					if( filterDto.getT() == 1)
+					{
+						List<BasicDTO> l1 = (List<BasicDTO>) l.get("basicDetails");
+											
+						basicDao.insertIntoExcel(l1,2);
+					}
+					
 					responseDto.setMessage("Equipment Master Details return Successfully by filter....."); 
 					responseDto.setData(l);
 				}
@@ -346,7 +357,21 @@ public class MainServiceImpl implements MainService{
 			   System.out.println(locationList);
 			   System.out.println(organizationList);
 			   
-			  
+			   FilterDto filterDto = new FilterDto();
+			   filterDto.setId(id);
+			   filterDto.setProcessed(false);
+		       boolean check = basicDao.isIdExist(filterDto);
+		       
+		       if(check == true)
+		       {
+		    	   basicDto.setUpdatePendiing(true);
+				   basicDao.updateMasterData(basicDto);	
+		    	   basicDto.setIs_processed(true);
+		       }else
+		       {
+		    	   basicDto.setIs_processed(false);
+		       }
+		       
 			  
 			   
 			  basicDao.insertBasicData(basicDto);
@@ -425,10 +450,6 @@ public class MainServiceImpl implements MainService{
 			   {
 				   version = version -1;
 			   }
-			  
-			   basicDto.setVersion(version);
-			   
-			   basicDao.updateBasicData(basicDto);
 			   
 			  
 			  
@@ -437,14 +458,22 @@ public class MainServiceImpl implements MainService{
 				   filterDto.setProcessed(false);
 			       boolean check = basicDao.isIdExist(filterDto);
 			       
-			       if(check == true)
+			     /*  if(check == true)
 			       {
 				      basicDto.setUpdatePendiing(true);
 				      basicDao.updateMasterData(basicDto);	   
 				   
 			       }
 			       else
-			       {
+			       { 
+			       
+			       */
+			       if(check == false){
+			    	   
+			    	   basicDto.setVersion(version);
+					   
+					   basicDao.updateBasicData(basicDto);
+					   
 				   version = 1;
 				   basicDto.setVersion(1);
 				   generalDto.setVersion(1);
@@ -572,6 +601,104 @@ public class MainServiceImpl implements MainService{
 
 		return responseDto;
 		
+	}
+
+
+
+
+	@Override
+	public ResponseDto exportExcel(int x) {
+		logger.info("MainServiceImpl | exportData | Execution start input " + x);
+
+		ResponseDto responseDto = new ResponseDto();
+		responseDto.setStatus(Boolean.TRUE);
+		responseDto.setStatusCode(200);
+
+		try {
+			
+			  basicDao.exportFromExcel(x);
+			   
+			  responseDto.setMessage("Export Successfully...... ");
+
+		} catch (Exception e) {
+
+			logger.error("MainServiceImpl | exportData | Exception " + e.getMessage());
+			responseDto.setStatus(Boolean.FALSE);
+			responseDto.setStatusCode(500);
+			responseDto.setMessage(e.getMessage());
+
+		}
+
+		logger.info("MainServiceImpl | exportData | Execution end ouput " + responseDto);
+
+		return responseDto;
+		
+	}
+
+
+
+	@Override
+	public ResponseDto myCategory() {
+		
+		logger.info("MainServiceImpl | categoryAllData | Execution start input ");
+
+		ResponseDto responseDto = new ResponseDto();
+		responseDto.setStatus(Boolean.TRUE);
+		responseDto.setStatusCode(200);
+
+		try {
+			
+			
+			HashMap<Integer,String > l = basicDao.listCategory();
+			
+			responseDto.setMessage("List of categories ......");
+			responseDto.setData(l);
+			
+		} catch (Exception e) {
+
+			logger.error("MainServiceImpl | saveAllData | Exception " + e.getMessage());
+			responseDto.setStatus(Boolean.FALSE);
+			responseDto.setStatusCode(500);
+			responseDto.setMessage(e.getMessage());
+
+		}
+
+		logger.info("MainServiceImpl | categoryAllData | Execution end ouput " + responseDto);
+
+		return responseDto;
+	}
+
+
+
+	@Override
+	public ResponseDto mySortingData() {
+		
+		logger.info("MainServiceImpl | sortingAllData | Execution start input ");
+
+		ResponseDto responseDto = new ResponseDto();
+		responseDto.setStatus(Boolean.TRUE);
+		responseDto.setStatusCode(200);
+
+		try {
+			
+			
+			HashMap<Integer,String > l = basicDao.listSortingData();
+			
+			responseDto.setMessage("List of categories ......");
+			responseDto.setData(l);
+			
+		} catch (Exception e) {
+
+			logger.error("MainServiceImpl | saveAllData | Exception " + e.getMessage());
+			responseDto.setStatus(Boolean.FALSE);
+			responseDto.setStatusCode(500);
+			responseDto.setMessage(e.getMessage());
+
+		}
+
+		logger.info("MainServiceImpl | sortingAllData | Execution end ouput " + responseDto);
+
+		return responseDto;
 	}
 
 

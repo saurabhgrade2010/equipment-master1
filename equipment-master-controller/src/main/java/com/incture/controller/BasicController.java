@@ -1,5 +1,12 @@
 package com.incture.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +35,68 @@ public class BasicController {
 	}
 
 	
+	@GetMapping("/export-stagged-data")
+	public void getDownloadStagged(HttpServletResponse response) throws IOException {
+		
+		FilterDto filterDto = new FilterDto();
+		
+		filterDto.setType(true);
+		filterDto.setProcessed(true);
+		
+		filterDto.setT(1);
+		
+		mainService.readAllData(filterDto);
+		
+	    FileInputStream myStream = new FileInputStream(new File("StaggedData.xls"));
+
+	    //response.addHeader("Content-disposition", "inline;filename=sample.txt");
+	    //response.setContentType("txt/plain");
+	    
+	    response.addHeader("Content-disposition", "attachment;filename=StaggedData.xls");
+	    response.setContentType("application/octet-stream");
+
+	    // Copy the stream to the response's output stream.
+	    IOUtils.copy(myStream, response.getOutputStream());
+	    response.flushBuffer();
+	}
+	
+	
+	@GetMapping("/export-master-data")
+	public void getDownloadMaster(HttpServletResponse response) throws IOException {
+
+
+        FilterDto filterDto = new FilterDto();
+		
+        filterDto.setType(false);
+		filterDto.setProcessed(true);
+		filterDto.setUpdatePending(false);
+		filterDto.setT(1);
+		
+		mainService.readAllData(filterDto);
+		
+		 //mainService.exportExcel(1);
+	    FileInputStream myStream = new FileInputStream(new File("MasterData.xls"));
+
+	    //response.addHeader("Content-disposition", "inline;filename=sample.txt");
+	    //response.setContentType("txt/plain");
+	    
+	    response.addHeader("Content-disposition", "attachment;filename=MasterData.xls");
+	    response.setContentType("application/octet-stream");
+
+	    // Copy the stream to the response's output stream.
+	    IOUtils.copy(myStream, response.getOutputStream());
+	    response.flushBuffer();
+	}
+	
+	@GetMapping("/category")
+	public ResponseDto listCategory() {
+		return mainService.myCategory();
+	}
+	
+	@GetMapping("/sorting")
+	public ResponseDto listSorting() {
+		return mainService.mySortingData();
+	}
 	
 	@PostMapping("/read-stagged-false")
 	public ResponseDto createMasterStagged(@RequestBody FilterDto filterDto) {
@@ -36,14 +105,6 @@ public class BasicController {
 		return mainService.readAllData(filterDto);
 	}
 	
-	
-	@PostMapping("/insert-into-excel")
-	public ResponseDto insertIntoExcel(@RequestBody FilterDto filterDto) {
-		filterDto.setType(true);
-		filterDto.setProcessed(false);
-		filterDto.setT(1);
-		return mainService.readAllData(filterDto);
-	}
 	
 	
 	@PostMapping("/read-stagged-all")
@@ -54,7 +115,7 @@ public class BasicController {
 
 	}
 	
-	@PostMapping("/master-data-false")
+	@PostMapping("/master-data-all")
 	public ResponseDto listMasterDataFalse(@RequestBody FilterDto filterDto) {
 		filterDto.setType(false);
 		filterDto.setProcessed(true);

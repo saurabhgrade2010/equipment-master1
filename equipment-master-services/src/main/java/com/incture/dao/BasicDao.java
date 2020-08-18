@@ -1,5 +1,6 @@
 package com.incture.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.incture.dto.BasicDTO;
@@ -25,9 +26,15 @@ public interface BasicDao {
 	BasicDTO listBasicData(BasicDTO basicDTO); 
 	BasicDTO listMasterData(BasicDTO basicDTO); 
 	
-	void insertIntoExcel(List<Object> l);
+	void insertIntoExcel(List<BasicDTO> l,int x);
 	
-	List<Object> listBasicDataByFilterTwo(FilterDto filterDto);
+	List<BasicDTO> exportFromExcel(int x);
+	
+	HashMap<String,Object> listBasicDataByFilterTwo(FilterDto filterDto);
+	
+	HashMap<Integer,String> listCategory();
+	
+	HashMap<Integer,String> listSortingData();
 	
 	
 }
